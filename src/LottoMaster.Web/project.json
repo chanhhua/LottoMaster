@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet5-LottoMaster.Web-d8513444-0dca-4406-a349-5c78780c1a82",
   "version": "1.0.0-*",
   "compilationOptions": {
@@ -8,7 +8,11 @@
   "dependencies": {
     "EntityFramework.Commands": "7.0.0-rc1-final",
     "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
-    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc1-final",
+    "jQuery.UI.Core": "1.8.9",
+    "Microsoft.AspNet.Authentication": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.Facebook": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.Google": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.OAuth": "1.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc1-final",
     "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
@@ -18,13 +22,18 @@
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
     "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.FileProviderExtensions" : "1.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final"
+    "Microsoft.Extensions.SecretManager": "1.0.0-rc1-final",
+    "Microsoft.Extensions.WebEncoders.Core": "1.0.0-rc1-final",
+    "Microsoft.Framework.SecretManager": "1.0.0-beta8",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
+    "Newtonsoft.Json": "8.0.2",
+    "SecretManager": "1.0.0-beta5",
+    "System.Net.Sockets": "4.0.0"
   },
 
   "commands": {
@@ -34,7 +43,11 @@
 
   "frameworks": {
     "dnx451": { },
-    "dnxcore50": { }
+    "dnxcore50": {
+      "dependencies": {
+        "System.Dynamic.Runtime": "4.0.10"
+      }
+    }
   },
 
   "exclude": [

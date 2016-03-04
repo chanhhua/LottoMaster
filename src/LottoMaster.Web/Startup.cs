@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using LottoMaster.Web.Models;
 using LottoMaster.Web.Services;
+using Microsoft.AspNet.Authentication.Google;
+using Microsoft.AspNet.Authentication.OAuth;
+using Microsoft.Extensions.WebEncoders;
 
 namespace LottoMaster.Web
 {
@@ -21,6 +24,7 @@ namespace LottoMaster.Web
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                //.AddJsonFile("secrets.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
@@ -53,6 +57,8 @@ namespace LottoMaster.Web
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,9 +94,37 @@ namespace LottoMaster.Web
 
             app.UseStaticFiles();
 
+
+
             app.UseIdentity();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
+
+            app.UseFacebookAuthentication(options =>
+            {
+                options.AppId = Configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+
+            // See config.json
+            // https://console.developers.google.com/project
+            app.UseGoogleAuthentication(new GoogleOptions
+            {
+                ClientId = Configuration["google:clientid"],
+                ClientSecret = Configuration["google:clientsecret"],
+                Events = new OAuthEvents()
+                {
+                    OnRemoteError = ctx =>
+
+                    {
+                        ctx.Response.Redirect("/error?FailureMessage=" + UrlEncoder.Default.UrlEncode(ctx.Error.Message));
+                        ctx.HandleResponse();
+                        return Task.FromResult(0);
+                    }
+                }
+            });
+
 
             app.UseMvc(routes =>
             {
@@ -98,6 +132,9 @@ namespace LottoMaster.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+
         }
 
         // Entry point for the application.
